@@ -11,8 +11,10 @@
   --error: #f04438;
   --border: #e5e5e5;
   --body: #423f66;
-  --foreground: oklch(0.145 0 0);
+  --dashboard-background: #f8f8fa;
+  --faded: #7d7f81;
 
+  --foreground: oklch(0.145 0 0);
   --background: oklch(1 0 0);
   --primary-foreground: #ffffff;
   --card: oklch(1 0 0);
@@ -50,6 +52,8 @@
   --color-primary-base: var(--primary-base);
   --color-error: var(--error);
   --color-body: var(--body);
+  --color-dashboard-background: var(--dashboard-background);
+  --color-faded: var(--faded);
 }
 
 @theme inline {
@@ -116,4 +120,12 @@
 
 p {
   color: var(--body);
+}
+
+.padding-inline {
+  padding-inline: 32px;
+}
+
+.padding-block {
+  padding-block: 32px;
 }
