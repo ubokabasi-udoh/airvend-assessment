@@ -66,14 +66,14 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 lg:gap-4 lg:grid-cols-4">
         {cards.map((card) => (
           <div
             key={card.label}
-            className="rounded-xl border bg-white p-5 flex flex-col gap-2"
+            className="rounded-xl border bg-white p-3 lg:p-5 flex flex-col gap-1 lg:gap-2"
           >
             <span className="text-xs lg:text-sm text-faded">{card.label}</span>
-            <span className="text-2xl lg:text-3xl font-semibold text-primary-dark">
+            <span className="text-xl lg:text-3xl font-semibold text-primary-dark">
               {card.value}
             </span>
           </div>
@@ -81,11 +81,11 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
-        <div className="rounded-xl border bg-white p-5 lg:col-span-3">
-          <p className="font-semibold mb-1">Sessions</p>
+        <div className="rounded-xl border bg-white p-3 lg:p-5 lg:col-span-3">
+          <p className="text-sm lg:text-base font-semibold mb-1">Sessions</p>
           <p className="text-xs text-faded mb-4">Last 30 days</p>
 
-          <div className="h-[320px]">
+          <div className="h-[240px] lg:h-[320px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.sessions_last_30_days}>
                 <defs>
@@ -115,7 +115,7 @@ export default function DashboardPage() {
                 <Area
                   type="monotone"
                   dataKey="count"
-                  stroke="#4834d4"
+                  stroke="var(--primary-dark)"
                   strokeWidth={2}
                   fill="url(#sessionsFill)"
                 />
@@ -124,8 +124,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border bg-white p-5 lg:col-span-2">
-          <p className="font-semibold mb-4">Sessions by Network</p>
+        <div className="rounded-xl border bg-white p-3 lg:p-5 lg:col-span-2">
+          <p className="text-sm lg:text-base font-semibold mb-4">Sessions by Network</p>
 
           <Table>
             <TableHeader>

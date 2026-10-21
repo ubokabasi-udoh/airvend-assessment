@@ -53,7 +53,7 @@ export default function ViewFundingModal({
   return (
     <SideModal isOpen={isOpen} onClose={onClose} side="right" width={500}>
       <div className="h-full flex flex-col">
-        <div className="border-b px-6 py-5">
+        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
           <p className="text-lg lg:text-xl font-semibold">Funding Details</p>
 
           <p className="text-xs lg:text-sm">
@@ -61,7 +61,7 @@ export default function ViewFundingModal({
           </p>
         </div>
 
-        <div className="p-6 flex-1 flex flex-col gap-5 overflow-y-auto text-sm">
+        <div className="p-4 lg:p-6 flex-1 flex flex-col gap-4 lg:gap-5 overflow-y-auto text-sm">
           {isPending ? (
             "Loading..."
           ) : isError || !funding ? (
@@ -71,7 +71,7 @@ export default function ViewFundingModal({
               <div key={field.label} className="relative">
                 <label className="input-label">{field.label}</label>
 
-                <Input value={field.value} readOnly className="h-12" />
+                <Input value={field.value} readOnly className="h-9 lg:h-12" />
               </div>
             ))
           )}

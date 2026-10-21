@@ -12,7 +12,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -59,7 +58,10 @@ export default function SimpleTable<const H extends readonly Column[]>({
   const [internalPage, setInternalPage] = React.useState(page);
 
   const activePage = currentPage ?? internalPage;
-  const totalPages = Math.max(1, Math.ceil((total ?? rowList.length) / pageSize));
+  const totalPages = Math.max(
+    1,
+    Math.ceil((total ?? rowList.length) / pageSize),
+  );
 
   const safePage = Math.min(Math.max(activePage, 1), totalPages);
 
@@ -119,113 +121,107 @@ export default function SimpleTable<const H extends readonly Column[]>({
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {headers.map((header) => (
-            <TableHead key={header.key}>{header.label}</TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
-
-      <TableBody>
-        {visibleRows.length ? (
-          visibleRows.map((row, index) => (
-            <TableRow
-              onClick={() => onRowClick?.(row)}
-              key={startIndex + index}
-            >
-              {headers.map((header) => (
-                <TableCell key={header.key}>
-                  {renderCell<H>(header, row)}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))
-        ) : (
+    <div className="w-full bg-white border border-border-faded rounded-2xl overflow-hidden">
+      <Table containerClassName="border-0 rounded-none">
+        <TableHeader>
           <TableRow>
-            <TableCell colSpan={headers.length} className="h-24 text-center">
-              No results.
-            </TableCell>
+            {headers.map((header) => (
+              <TableHead key={header.key}>{header.label}</TableHead>
+            ))}
           </TableRow>
-        )}
-      </TableBody>
+        </TableHeader>
 
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={headers.length}>
-            <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-              <span className="text-xs text-faded">
-                Showing {totalItems === 0 ? 0 : startIndex + 1}–
-                {Math.min(startIndex + visibleRows.length, totalItems)} of{" "}
-                {totalItems}
-              </span>
+        <TableBody>
+          {visibleRows.length ? (
+            visibleRows.map((row, index) => (
+              <TableRow
+                onClick={() => onRowClick?.(row)}
+                key={startIndex + index}
+              >
+                {headers.map((header) => (
+                  <TableCell key={header.key}>
+                    {renderCell<H>(header, row)}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={headers.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
 
-              <Pagination>
-                <PaginationContent className="ml-auto">
-                  <PaginationItem>
-                    <PaginationPrevious
-                      aria-disabled={previousDisabled}
-                      className={
-                        previousDisabled
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
+      <div className="flex flex-col items-center justify-between gap-3 px-3 py-4 lg:px-6 sm:flex-row border-t text-nowrap shrink-0">
+        <span className="text-xs text-faded">
+          Showing {totalItems === 0 ? 0 : startIndex + 1}–
+          {Math.min(startIndex + visibleRows.length, totalItems)} of{" "}
+          {totalItems}
+        </span>
+
+        <Pagination>
+          <PaginationContent className="sm:ml-auto flex-wrap justify-center">
+            <PaginationItem>
+              <PaginationPrevious
+                aria-disabled={previousDisabled}
+                className={
+                  previousDisabled
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+                onClick={() => {
+                  if (!previousDisabled) {
+                    onDecrease?.();
+                    setPage(safePage - 1);
+                  }
+                }}
+              />
+            </PaginationItem>
+
+            {getPageNumbers().map((number, index) => (
+              <PaginationItem key={`${number}-${index}`}>
+                {number === "ellipsis" ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    isActive={number === safePage}
+                    aria-current={number === safePage ? "page" : undefined}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      if (number !== safePage) {
+                        setPage(number);
                       }
-                      onClick={() => {
-                        if (!previousDisabled) {
-                          onDecrease?.();
-                          setPage(safePage - 1);
-                        }
-                      }}
-                    />
-                  </PaginationItem>
+                    }}
+                    className=" size-8 !h-8 text-xs rounded-[10px]"
+                  >
+                    {number}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
 
-                  {getPageNumbers().map((number, index) => (
-                    <PaginationItem key={`${number}-${index}`}>
-                      {number === "ellipsis" ? (
-                        <PaginationEllipsis />
-                      ) : (
-                        <PaginationLink
-                          isActive={number === safePage}
-                          aria-current={
-                            number === safePage ? "page" : undefined
-                          }
-                          onClick={(event) => {
-                            event.preventDefault();
-                            if (number !== safePage) {
-                              setPage(number);
-                            }
-                          }}
-                          className=" size-8 !h-8 text-xs rounded-[10px]"
-                        >
-                          {number}
-                        </PaginationLink>
-                      )}
-                    </PaginationItem>
-                  ))}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      aria-disabled={nextDisabled}
-                      className={
-                        nextDisabled
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                      onClick={() => {
-                        if (!nextDisabled) {
-                          onIncrease?.();
-                          setPage(safePage + 1);
-                        }
-                      }}
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          </TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+            <PaginationItem>
+              <PaginationNext
+                aria-disabled={nextDisabled}
+                className={
+                  nextDisabled
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
+                onClick={() => {
+                  if (!nextDisabled) {
+                    onIncrease?.();
+                    setPage(safePage + 1);
+                  }
+                }}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </div>
+    </div>
   );
 }

@@ -54,7 +54,6 @@ export default function ViewExtensionModal({
     mutationFn: (payload: TEditExtensionPayload) => UPDATE_EXTENSION(payload),
 
     onSuccess: (response) => {
-      console.log("update extension", response);
 
       toast.add({
         title: "Extension updated!",
@@ -128,7 +127,7 @@ export default function ViewExtensionModal({
       width={500}
     >
       <div className="h-full flex flex-col">
-        <div className="border-b px-6 py-5">
+        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
           <p className="text-lg lg:text-xl font-semibold">Extension Details</p>
 
           <p className="text-xs lg:text-sm">
@@ -136,7 +135,7 @@ export default function ViewExtensionModal({
           </p>
         </div>
 
-        <div className="p-6 flex-1 flex flex-col gap-5 overflow-y-auto text-sm">
+        <div className="p-4 lg:p-6 flex-1 flex flex-col gap-4 lg:gap-5 overflow-y-auto text-sm">
           {isPending ? (
             "Loading..."
           ) : isError || !extension ? (
@@ -158,7 +157,7 @@ export default function ViewExtensionModal({
                     }))
                   }
                   disabled={!isEditing}
-                  className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring h-12 disabled:opacity-70"
+                  className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12 disabled:opacity-70"
                 >
                   <option value="INTERNAL">Internal</option>
                   <option value="EXTERNAL">External</option>
@@ -181,7 +180,7 @@ export default function ViewExtensionModal({
                     }))
                   }
                   disabled={!isEditing}
-                  className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring h-12 disabled:opacity-70"
+                  className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12 disabled:opacity-70"
                 >
                   <option value="ACTIVE">Active</option>
                   <option value="INACTIVE">Inactive</option>
@@ -192,7 +191,7 @@ export default function ViewExtensionModal({
                 <div key={field.label} className="relative">
                   <label className="input-label">{field.label}</label>
 
-                  <Input value={field.value} readOnly className="h-12" />
+                  <Input value={field.value} readOnly className="h-9 lg:h-12" />
                 </div>
               ))}
 

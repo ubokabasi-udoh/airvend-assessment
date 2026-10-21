@@ -113,7 +113,7 @@ export function SideModal({
               ? "translate-x-[calc(100%+1rem)]"
               : "-translate-x-[calc(100%+1rem)]"
         } ${className}`}
-        style={{ width }}
+        style={{ width, maxWidth: "100%" }}
       >
         {children}
       </div>

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import { loginSchema } from "@/validations/login";
 import { toast } from "@/components/ui/toast";
+import { useUserStore } from "@/store/user";
 import { AirvendLogo } from "@/assets/logo";
 
 type LoginErrors = {
@@ -15,6 +16,7 @@ type LoginErrors = {
 
 export default function SignInPage() {
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -31,6 +33,7 @@ export default function SignInPage() {
     mutationFn: LOGIN,
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
+      setUser(data.user);
       navigate("/dashboard");
     },
     onError() {
@@ -86,7 +89,7 @@ export default function SignInPage() {
     <div className="bg-primary-dark h-dvh flex flex-col items-center justify-center">
       <AirvendLogo className="mb-8 lg:mb-12" type="white" />
 
-      <div className="bg-white w-full max-w-[524px] p-12 pb-8 rounded-2xl mx-[8%]">
+      <div className="bg-white w-[80%] sm:w-full max-w-[350px] sm:max-w-[450px] lg:max-w-[524px] p-6 lg:p-12 pb-6 lg:pb-8 rounded-2xl mx-[8%]">
         <div className="w-full text-center pb-4">
           <p className="text-lg lg:text-xl font-semibold">Master Dashboard</p>
           <p className="text-xs lg:text-sm">

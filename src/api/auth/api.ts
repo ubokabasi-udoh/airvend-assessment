@@ -12,7 +12,7 @@ export async function LOGIN(data: TLoginPayload): Promise<TLoginResponse> {
 
 export async function GET_LOGGED_IN_USER(): Promise<TLoginResponse> {
   try {
-    const response = await api.post("auth/me");
+    const response = await api.get("auth/me");
 
     return response.data;
   } catch (error) {

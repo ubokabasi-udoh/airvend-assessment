@@ -114,7 +114,7 @@
 }
 
 .input-label {
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 8px;
   display: block;
   font-weight: 500;
@@ -125,9 +125,23 @@ p {
 }
 
 .padding-inline {
-  padding-inline: 32px;
+  padding-inline: 16px;
 }
 
 .padding-block {
-  padding-block: 32px;
+  padding-block: 16px;
+}
+
+@media (min-width: 1024px) {
+  .input-label {
+    font-size: 14px;
+  }
+
+  .padding-inline {
+    padding-inline: 32px;
+  }
+
+  .padding-block {
+    padding-block: 32px;
+  }
 }

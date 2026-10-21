@@ -191,15 +191,15 @@ export default function ViewUserModal({
     onClose();
   };
 
-  const inputClassName = "h-12";
+  const inputClassName = "h-9 lg:h-12";
 
   return (
     <SideModal isOpen={isOpen} onClose={handleClose} side="right" width={500}>
       {isLoadingUser || !userData ? (
-        <div className="p-6 text-sm">Loading user...</div>
+        <div className="p-4 lg:p-6 text-sm">Loading user...</div>
       ) : (
       <div className="h-full flex flex-col">
-        <div className="border-b px-6 py-5">
+        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
           <p className="text-lg lg:text-xl font-semibold">User Details</p>
 
           <p className="text-xs lg:text-sm">
@@ -207,7 +207,7 @@ export default function ViewUserModal({
           </p>
         </div>
 
-        <div className="p-6 flex-1 flex flex-col gap-5 overflow-y-auto">
+        <div className="p-4 lg:p-6 flex-1 flex flex-col gap-4 lg:gap-5 overflow-y-auto">
           <div className="relative">
             <label className="input-label" htmlFor="firstname">
               First name
@@ -286,7 +286,7 @@ export default function ViewUserModal({
               value={formData.role}
               onChange={handleChange}
               disabled={!isEditing}
-              className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring h-12 disabled:opacity-70"
+              className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12 disabled:opacity-70"
               aria-invalid={!!errors.role}
             >
               <option value="" disabled>

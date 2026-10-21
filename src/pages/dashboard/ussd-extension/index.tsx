@@ -78,7 +78,7 @@ export default function USSDExtensionPage() {
     <>
       <div className="flex items-center mb-4">
         <Input
-          className="h-12 max-w-[420px] placeholder:text-faded"
+          className="h-9 lg:h-12 max-w-[420px] placeholder:text-faded"
           type="search"
           placeholder="Search extensions"
           onChange={(e) => setSearch(e.target.value)}

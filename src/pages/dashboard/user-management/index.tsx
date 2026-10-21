@@ -70,9 +70,9 @@ export default function UsersPage() {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between gap-3 mb-4">
         <Input
-          className="h-12 max-w-[420px] placeholder:text-faded"
+          className="h-9 lg:h-12 max-w-[420px] placeholder:text-faded"
           type="search"
           placeholder="Search name, email"
           onChange={(e) => setSearch(e.target.value)}
@@ -81,7 +81,7 @@ export default function UsersPage() {
 
         <Button
           variant="outline"
-          className="!h-12 text-base rounded-lg font-normal px-7"
+          className="!h-9 lg:!h-12 text-xs lg:text-base rounded-lg font-normal px-4 lg:px-7"
           onClick={() => setIsOpen('create')}
         >
           Add User

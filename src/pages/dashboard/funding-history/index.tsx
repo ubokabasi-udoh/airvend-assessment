@@ -80,9 +80,9 @@ export default function FundingHistoryPage() {
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex flex-wrap items-center gap-3 lg:gap-4 mb-4">
         <Input
-          className="h-12 max-w-[420px] placeholder:text-faded"
+          className="h-9 lg:h-12 max-w-[420px] placeholder:text-faded"
           type="search"
           placeholder="Search"
           onChange={(e) => setSearch(e.target.value)}
@@ -90,7 +90,7 @@ export default function FundingHistoryPage() {
         />
 
         <select
-          className="ml-auto h-12 rounded-md border border-input bg-transparent px-3 text-sm outline-none focus:ring-2 focus:ring-ring"
+          className="ml-auto h-9 lg:h-12 rounded-md border border-input bg-transparent px-2 lg:px-3 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring"
           value={fundingType}
           onChange={(e) => {
             setFundingType(e.target.value as "" | "manual" | "automatic");

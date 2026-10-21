@@ -137,7 +137,7 @@ export default function CreateUserModal({
   return (
     <SideModal isOpen={isOpen} onClose={handleClose} side="right" width={500}>
       <div className="h-full flex flex-col">
-        <div className="border-b px-6 py-5">
+        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
           <p className="text-lg lg:text-xl font-semibold">Create User</p>
           <p className="text-xs lg:text-sm">
             Add a new team member to the Master Dashboard.
@@ -145,7 +145,7 @@ export default function CreateUserModal({
         </div>
 
         <form
-          className="p-6 h-full flex flex-col gap-5 overflow-y-auto"
+          className="p-4 lg:p-6 h-full flex flex-col gap-4 lg:gap-5 overflow-y-auto"
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
@@ -305,7 +305,7 @@ export default function CreateUserModal({
               onChange={handleChange}
               aria-invalid={!!errors.role}
               aria-describedby={errors.role ? "role-error" : undefined}
-              className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring h-12"
+              className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12"
             >
               <option value="" disabled>
                 Select a role

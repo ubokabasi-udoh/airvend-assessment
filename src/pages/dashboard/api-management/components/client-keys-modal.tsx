@@ -48,8 +48,6 @@ export default function ClientKeysModal({
     mutationFn: () => CREATE_CLIENT_KEY({ uid, name: name.trim(), environment }),
 
     onSuccess: (response) => {
-      // TODO: response shape unknown, likely contains the full key shown once
-      console.log("create key", response);
 
       toast.add({
         title: "Key created!",
@@ -110,7 +108,7 @@ export default function ClientKeysModal({
   return (
     <SideModal isOpen={isOpen} onClose={onClose} side="right" width={500}>
       <div className="h-full flex flex-col">
-        <div className="border-b px-6 py-5">
+        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
           <p className="text-lg lg:text-xl font-semibold">API Keys</p>
 
           <p className="text-xs lg:text-sm">
@@ -120,7 +118,7 @@ export default function ClientKeysModal({
           </p>
         </div>
 
-        <div className="p-6 flex-1 flex flex-col gap-6 overflow-y-auto">
+        <div className="p-4 lg:p-6 flex-1 flex flex-col gap-6 overflow-y-auto">
           <div className="relative">
             <label className="input-label" htmlFor="key-name">
               New key name
@@ -134,7 +132,7 @@ export default function ClientKeysModal({
                   setName(e.target.value);
                   setNameError("");
                 }}
-                className="h-12"
+                className="h-9 lg:h-12"
                 aria-invalid={!!nameError}
               />
 
@@ -142,15 +140,14 @@ export default function ClientKeysModal({
               <select
                 value={environment}
                 onChange={(e) => setEnvironment(e.target.value)}
-                className="rounded-md border border-input bg-transparent px-3 text-sm outline-none focus:ring-2 focus:ring-ring h-12"
+                className="rounded-md border border-input bg-transparent px-2 lg:px-3 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12"
               >
                 <option value="live">Live</option>
                 <option value="test">Test</option>
               </select>
 
               <Button
-                variant="default"
-                className="h-12 rounded-[10px]"
+                className="h-9 lg:h-12 rounded-[10px] bg-primary-dark px-4 text-xs lg:text-sm"
                 disabled={createMutation.isPending}
                 onClick={handleCreate}
               >
