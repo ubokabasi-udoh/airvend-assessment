@@ -35,8 +35,10 @@ export default function DashboardLayout() {
       <div className="flex-1 min-w-0 h-full flex flex-col">
         <DashboardHeader onMenuClick={() => setMenuOpen(true)} />
 
-        <div className="padding-inline padding-block flex-1 overflow-y-auto mx-auto">
-          <Outlet />
+        <div className="padding-inline padding-block flex-1 overflow-y-auto grid grid-cols-[1fr_minmax(0,1400px)_1fr]">
+          <div className="col-start-2 w-full">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>
