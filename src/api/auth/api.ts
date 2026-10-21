@@ -10,7 +10,7 @@ export async function LOGIN(data: TLoginPayload): Promise<TLoginResponse> {
   }
 }
 
-export async function GET_USER(): Promise<TLoginResponse> {
+export async function GET_LOGGED_IN_USER(): Promise<TLoginResponse> {
   try {
     const response = await api.post("auth/me");
 

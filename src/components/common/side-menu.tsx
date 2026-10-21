@@ -53,7 +53,7 @@ export function DashboardSideMenu() {
         <AirvendLogo />
       </div>
 
-      <div className="px-4 py-6 flex flex-col text-faded text-sm lg:text-base">
+      <div className="px-4 py-6 flex flex-col gap-2 text-faded text-sm lg:text-base">
         {menuList.map((menu) => {
 
           const isActive = menu.href == "/dashboard" ? menu.href==pathname : pathname.includes(menu.href) 

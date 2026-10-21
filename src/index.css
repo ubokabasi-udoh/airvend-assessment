@@ -10,6 +10,7 @@
   --primary-base: #4834d4;
   --error: #f04438;
   --border: #e5e5e5;
+  --border-faded:#EDF2F7;
   --body: #423f66;
   --dashboard-background: #f8f8fa;
   --faded: #7d7f81;
@@ -75,6 +76,7 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-border-faded: var(--border-faded);
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
