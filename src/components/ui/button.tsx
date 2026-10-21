@@ -3,12 +3,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
 const buttonVariants = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-xs font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 h-8 lg:h-10.5 rounded-full font-medium text-xs lg:text-base hover:-translate-y-[1px] hover:cursor-pointer transition-all duration-300",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-xs font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 h-8 lg:h-10.5 font-medium text-xs lg:text-base hover:-translate-y-[1px] hover:cursor-pointer transition-all duration-300",
   {
     variants: {
       variant: {
         default:
-          "bg-primary-base text-primary-foreground hover:bg-primary-base/80",
+          "bg-primary-dark text-primary-foreground hover:bg-primary-dark/80",
         outline:
           "border-primary-base text-primary-base bg-[#F2F2FF] aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:

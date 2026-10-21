@@ -8,6 +8,7 @@ import { loginSchema } from "@/validations/login";
 import { toast } from "@/components/ui/toast";
 import { useUserStore } from "@/store/user";
 import { AirvendLogo } from "@/assets/logo";
+import { getErrorMessage } from "@/utils/api-message";
 
 type LoginErrors = {
   email?: string;
@@ -36,10 +37,10 @@ export default function SignInPage() {
       setUser(data.user);
       navigate("/dashboard");
     },
-    onError() {
+    onError(error) {
       toast.add({
         title: "Sign in failed!",
-        description: "Invalid Credentials",
+        description: getErrorMessage(error, "Invalid Credentials"),
         type: "error",
       });
     },

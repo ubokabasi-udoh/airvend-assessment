@@ -9,6 +9,7 @@ import {
   GET_CLIENT_KEYS,
   REVOKE_CLIENT_KEY,
 } from "@/api/clients/api";
+import { getSuccessMessage, getErrorMessage } from "@/utils/api-message";
 
 type ClientKeysModalProps = {
   isOpen: boolean;
@@ -45,13 +46,16 @@ export default function ClientKeysModal({
   }, [isOpen]);
 
   const createMutation = useMutation({
-    mutationFn: () => CREATE_CLIENT_KEY({ uid, name: name.trim(), environment }),
+    mutationFn: () =>
+      CREATE_CLIENT_KEY({ uid, name: name.trim(), environment }),
 
     onSuccess: (response) => {
-
       toast.add({
         title: "Key created!",
-        description: "The API key has been created successfully.",
+        description: getSuccessMessage(
+          response,
+          "The API key has been created successfully.",
+        ),
         type: "success",
       });
 
@@ -59,10 +63,13 @@ export default function ClientKeysModal({
       queryClient.invalidateQueries({ queryKey: ["client-keys", uid] });
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "Create failed!",
-        description: "Unable to create key. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to create key. Please try again.",
+        ),
         type: "error",
       });
     },
@@ -71,10 +78,13 @@ export default function ClientKeysModal({
   const revokeMutation = useMutation({
     mutationFn: (kid: number) => REVOKE_CLIENT_KEY({ uid, kid: String(kid) }),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast.add({
         title: "Key revoked!",
-        description: "The API key has been revoked successfully.",
+        description: getSuccessMessage(
+          response,
+          "The API key has been revoked successfully.",
+        ),
         type: "success",
       });
 
@@ -82,10 +92,13 @@ export default function ClientKeysModal({
       queryClient.invalidateQueries({ queryKey: ["client-keys", uid] });
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "Revoke failed!",
-        description: "Unable to revoke key. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to revoke key. Please try again.",
+        ),
         type: "error",
       });
 

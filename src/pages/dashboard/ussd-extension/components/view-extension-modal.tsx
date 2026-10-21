@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { SideModal } from "@/components/common/side-modal";
 import { GET_EXTENSION, UPDATE_EXTENSION } from "@/api/extensions/api";
+import { getSuccessMessage, getErrorMessage } from "@/utils/api-message";
 
 type ViewExtensionModalProps = {
   isOpen: boolean;
@@ -54,10 +55,12 @@ export default function ViewExtensionModal({
     mutationFn: (payload: TEditExtensionPayload) => UPDATE_EXTENSION(payload),
 
     onSuccess: (response) => {
-
       toast.add({
         title: "Extension updated!",
-        description: "Extension details have been updated successfully.",
+        description: getSuccessMessage(
+          response,
+          "Extension details have been updated successfully.",
+        ),
         type: "success",
       });
 
@@ -66,10 +69,13 @@ export default function ViewExtensionModal({
       queryClient.invalidateQueries({ queryKey: ["extensions"] });
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "Update failed!",
-        description: "Unable to update extension. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to update extension. Please try again.",
+        ),
         type: "error",
       });
     },

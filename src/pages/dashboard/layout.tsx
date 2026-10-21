@@ -34,7 +34,8 @@ export default function DashboardLayout() {
       <DashboardSideMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
       <div className="flex-1 min-w-0 h-full flex flex-col">
         <DashboardHeader onMenuClick={() => setMenuOpen(true)} />
-        <div className="padding-inline padding-block flex-1 overflow-y-auto">
+
+        <div className="padding-inline padding-block flex-1 overflow-y-auto mx-auto">
           <Outlet />
         </div>
       </div>

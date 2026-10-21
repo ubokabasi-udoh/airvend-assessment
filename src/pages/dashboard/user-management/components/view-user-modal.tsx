@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { SideModal } from "@/components/common/side-modal";
 import { GET_USER, UPDATE_USER, DELETE_USER } from "@/api/users/api";
+import { getSuccessMessage, getErrorMessage } from "@/utils/api-message";
 
 type ViewUserModalProps = {
   isOpen: boolean;
@@ -70,10 +71,13 @@ export default function ViewUserModal({
   const updateMutation = useMutation({
     mutationFn: (payload: TEditUserPayload) => UPDATE_USER(payload),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast.add({
         title: "User updated!",
-        description: "User details have been updated successfully.",
+        description: getSuccessMessage(
+          response,
+          "User details have been updated successfully.",
+        ),
         type: "success",
       });
 
@@ -84,10 +88,13 @@ export default function ViewUserModal({
       onSuccess?.();
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "Update failed!",
-        description: "Unable to update user. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to update user. Please try again.",
+        ),
         type: "error",
       });
     },
@@ -96,10 +103,13 @@ export default function ViewUserModal({
   const deleteMutation = useMutation({
     mutationFn: () => DELETE_USER({ uid }),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast.add({
         title: "User deleted!",
-        description: "The user has been deleted successfully.",
+        description: getSuccessMessage(
+          response,
+          "The user has been deleted successfully.",
+        ),
         type: "success",
       });
 
@@ -110,10 +120,13 @@ export default function ViewUserModal({
       onSuccess?.();
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "Delete failed!",
-        description: "Unable to delete user. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to delete user. Please try again.",
+        ),
         type: "error",
       });
 
@@ -198,200 +211,200 @@ export default function ViewUserModal({
       {isLoadingUser || !userData ? (
         <div className="p-4 lg:p-6 text-sm">Loading user...</div>
       ) : (
-      <div className="h-full flex flex-col">
-        <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
-          <p className="text-lg lg:text-xl font-semibold">User Details</p>
+        <div className="h-full flex flex-col">
+          <div className="border-b px-4 lg:px-6 py-4 lg:py-5">
+            <p className="text-lg lg:text-xl font-semibold">User Details</p>
 
-          <p className="text-xs lg:text-sm">
-            View and manage this team member's account.
-          </p>
-        </div>
-
-        <div className="p-4 lg:p-6 flex-1 flex flex-col gap-4 lg:gap-5 overflow-y-auto">
-          <div className="relative">
-            <label className="input-label" htmlFor="firstname">
-              First name
-            </label>
-
-            <Input
-              id="firstname"
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange}
-              readOnly={!isEditing}
-              className={inputClassName}
-              aria-invalid={!!errors.firstname}
-            />
-
-            {errors.firstname && (
-              <span className="text-error text-[10px] lg:text-xs">
-                {errors.firstname}
-              </span>
-            )}
+            <p className="text-xs lg:text-sm">
+              View and manage this team member's account.
+            </p>
           </div>
 
-          <div className="relative">
-            <label className="input-label" htmlFor="lastname">
-              Last name
-            </label>
+          <div className="p-4 lg:p-6 flex-1 flex flex-col gap-4 lg:gap-5 overflow-y-auto">
+            <div className="relative">
+              <label className="input-label" htmlFor="firstname">
+                First name
+              </label>
 
-            <Input
-              id="lastname"
-              name="lastname"
-              value={formData.lastname}
-              onChange={handleChange}
-              readOnly={!isEditing}
-              className={inputClassName}
-              aria-invalid={!!errors.lastname}
-            />
+              <Input
+                id="firstname"
+                name="firstname"
+                value={formData.firstname}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                className={inputClassName}
+                aria-invalid={!!errors.firstname}
+              />
 
-            {errors.lastname && (
-              <span className="text-error text-[10px] lg:text-xs">
-                {errors.lastname}
-              </span>
-            )}
-          </div>
+              {errors.firstname && (
+                <span className="text-error text-[10px] lg:text-xs">
+                  {errors.firstname}
+                </span>
+              )}
+            </div>
 
-          <div className="relative">
-            <label className="input-label" htmlFor="email">
-              Email
-            </label>
+            <div className="relative">
+              <label className="input-label" htmlFor="lastname">
+                Last name
+              </label>
 
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              readOnly={!isEditing}
-              className={inputClassName}
-              aria-invalid={!!errors.email}
-            />
+              <Input
+                id="lastname"
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                className={inputClassName}
+                aria-invalid={!!errors.lastname}
+              />
 
-            {errors.email && (
-              <span className="text-error text-[10px] lg:text-xs">
-                {errors.email}
-              </span>
-            )}
-          </div>
+              {errors.lastname && (
+                <span className="text-error text-[10px] lg:text-xs">
+                  {errors.lastname}
+                </span>
+              )}
+            </div>
 
-          <div className="relative">
-            <label className="input-label" htmlFor="role">
-              Role
-            </label>
+            <div className="relative">
+              <label className="input-label" htmlFor="email">
+                Email
+              </label>
 
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              disabled={!isEditing}
-              className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12 disabled:opacity-70"
-              aria-invalid={!!errors.role}
-            >
-              <option value="" disabled>
-                Select a role
-              </option>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                readOnly={!isEditing}
+                className={inputClassName}
+                aria-invalid={!!errors.email}
+              />
 
-              <option value="admin">Admin</option>
-              <option value="super_admin">Super Admin</option>
-            </select>
+              {errors.email && (
+                <span className="text-error text-[10px] lg:text-xs">
+                  {errors.email}
+                </span>
+              )}
+            </div>
 
-            {errors.role && (
-              <span className="text-error text-[10px] lg:text-xs">
-                {errors.role}
-              </span>
-            )}
-          </div>
+            <div className="relative">
+              <label className="input-label" htmlFor="role">
+                Role
+              </label>
 
-          <div className="relative">
-            <label className="input-label" htmlFor="uid">
-              User ID
-            </label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                disabled={!isEditing}
+                className="w-full rounded-md border border-input bg-transparent px-2 lg:px-3 py-1 lg:py-2 text-xs lg:text-sm outline-none focus:ring-2 focus:ring-ring h-9 lg:h-12 disabled:opacity-70"
+                aria-invalid={!!errors.role}
+              >
+                <option value="" disabled>
+                  Select a role
+                </option>
 
-            <Input
-              id="uid"
-              value={userData?.uid}
-              readOnly
-              className={inputClassName}
-            />
-          </div>
+                <option value="admin">Admin</option>
+                <option value="super_admin">Super Admin</option>
+              </select>
 
-          <div className="relative">
-            <label className="input-label" htmlFor="created_at">
-              Date created
-            </label>
+              {errors.role && (
+                <span className="text-error text-[10px] lg:text-xs">
+                  {errors.role}
+                </span>
+              )}
+            </div>
 
-            <Input
-              id="created_at"
-              value={new Date(userData?.created_at ?? "").toLocaleString()}
-              readOnly
-              className={inputClassName}
-            />
-          </div>
+            <div className="relative">
+              <label className="input-label" htmlFor="uid">
+                User ID
+              </label>
 
-          <div className="mt-auto pt-6">
-            {confirmDelete ? (
-              <div className="flex flex-col gap-3">
-                <Button
-                  variant="destructive"
-                  className="w-full rounded-[10px]"
-                  disabled={deleteMutation.isPending}
-                  onClick={() => deleteMutation.mutate()}
-                >
-                  {deleteMutation.isPending
-                    ? "Deleting user..."
-                    : "Click again to Confirm Delete"}
-                </Button>
+              <Input
+                id="uid"
+                value={userData?.uid}
+                readOnly
+                className={inputClassName}
+              />
+            </div>
 
-                <Button
-                  variant="default"
-                  className="w-full rounded-[10px]"
-                  disabled={isPending}
-                  onClick={() => setConfirmDelete(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            ) : (
-              <div className="flex gap-4">
-                <Button
-                  variant="default"
-                  className="flex-1 rounded-[10px]"
-                  disabled={isPending}
-                  onClick={handleEdit}
-                >
-                  {updateMutation.isPending
-                    ? "Saving..."
-                    : isEditing
-                      ? "Save Changes"
-                      : "Edit"}
-                </Button>
+            <div className="relative">
+              <label className="input-label" htmlFor="created_at">
+                Date created
+              </label>
 
-                {isEditing ? (
+              <Input
+                id="created_at"
+                value={new Date(userData?.created_at ?? "").toLocaleString()}
+                readOnly
+                className={inputClassName}
+              />
+            </div>
+
+            <div className="mt-auto pt-6">
+              {confirmDelete ? (
+                <div className="flex flex-col gap-3">
                   <Button
                     variant="destructive"
-                    className="flex-1 rounded-[10px]"
+                    className="w-full rounded-[10px]"
+                    disabled={deleteMutation.isPending}
+                    onClick={() => deleteMutation.mutate()}
+                  >
+                    {deleteMutation.isPending
+                      ? "Deleting user..."
+                      : "Click again to Confirm Delete"}
+                  </Button>
+
+                  <Button
+                    variant="default"
+                    className="w-full rounded-[10px]"
                     disabled={isPending}
-                    onClick={handleCancelEdit}
+                    onClick={() => setConfirmDelete(false)}
                   >
                     Cancel
                   </Button>
-                ) : (
+                </div>
+              ) : (
+                <div className="flex gap-4">
                   <Button
-                    variant="destructive"
+                    variant="default"
                     className="flex-1 rounded-[10px]"
                     disabled={isPending}
-                    onClick={() => setConfirmDelete(true)}
+                    onClick={handleEdit}
                   >
-                    Delete
+                    {updateMutation.isPending
+                      ? "Saving..."
+                      : isEditing
+                        ? "Save Changes"
+                        : "Edit"}
                   </Button>
-                )}
-              </div>
-            )}
+
+                  {isEditing ? (
+                    <Button
+                      variant="destructive"
+                      className="flex-1 rounded-[10px]"
+                      disabled={isPending}
+                      onClick={handleCancelEdit}
+                    >
+                      Cancel
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="destructive"
+                      className="flex-1 rounded-[10px]"
+                      disabled={isPending}
+                      onClick={() => setConfirmDelete(true)}
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
       )}
     </SideModal>
   );

@@ -74,7 +74,7 @@ export default function APIManagementPage() {
 
   return (
     <>
-      <div className="flex items-center mb-4">
+      <div className="flex items-center mb-4 w-full">
         <Input
           className="h-9 lg:h-12 max-w-[420px] placeholder:text-faded"
           type="search"

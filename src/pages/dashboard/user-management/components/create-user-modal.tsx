@@ -6,6 +6,7 @@ import { toast } from "@/components/ui/toast";
 import { SideModal } from "@/components/common/side-modal";
 import { createUserSchema } from "@/validations/user";
 import { CREATE_USER } from "@/api/users/api";
+import { getSuccessMessage, getErrorMessage } from "@/utils/api-message";
 
 type CreateUserErrors = {
   firstname?: string;
@@ -51,10 +52,13 @@ export default function CreateUserModal({
   const createUserMutation = useMutation({
     mutationFn: async (payload: TCreateUserPayload) => CREATE_USER(payload),
 
-    onSuccess: () => {
+    onSuccess: (response) => {
       toast.add({
         title: "User created!",
-        description: "The user has been created successfully.",
+        description: getSuccessMessage(
+          response,
+          "The user has been created successfully.",
+        ),
         type: "success",
       });
 
@@ -65,10 +69,13 @@ export default function CreateUserModal({
       onSuccess?.();
     },
 
-    onError: () => {
+    onError: (error) => {
       toast.add({
         title: "User creation failed!",
-        description: "Unable to create user. Please try again.",
+        description: getErrorMessage(
+          error,
+          "Unable to create user. Please try again.",
+        ),
         type: "error",
       });
     },
