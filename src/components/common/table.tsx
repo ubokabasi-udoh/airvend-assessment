@@ -36,6 +36,8 @@ type SimpleTableProps<H extends readonly Column[]> = {
   onRowClick?: (row: RowFor<H>) => void;
   page?: number;
   pageSize?: number;
+  /** total rows on the server; when set, rowList is treated as the current page only */
+  total?: number;
   currentPage?: number;
   onClick?: (page: number) => void;
   onIncrease?: () => void;
@@ -48,6 +50,7 @@ export default function SimpleTable<const H extends readonly Column[]>({
   onRowClick,
   page = 1,
   pageSize = 4,
+  total,
   currentPage,
   onClick,
   onIncrease,
@@ -56,7 +59,7 @@ export default function SimpleTable<const H extends readonly Column[]>({
   const [internalPage, setInternalPage] = React.useState(page);
 
   const activePage = currentPage ?? internalPage;
-  const totalPages = Math.max(1, Math.ceil(rowList.length / pageSize));
+  const totalPages = Math.max(1, Math.ceil((total ?? rowList.length) / pageSize));
 
   const safePage = Math.min(Math.max(activePage, 1), totalPages);
 
@@ -71,7 +74,11 @@ export default function SimpleTable<const H extends readonly Column[]>({
   };
 
   const startIndex = (safePage - 1) * pageSize;
-  const visibleRows = rowList.slice(startIndex, startIndex + pageSize);
+  const totalItems = total ?? rowList.length;
+  const visibleRows =
+    total === undefined
+      ? rowList.slice(startIndex, startIndex + pageSize)
+      : rowList;
 
   const getPageNumbers = () => {
     if (totalPages <= 7) {
@@ -149,9 +156,9 @@ export default function SimpleTable<const H extends readonly Column[]>({
           <TableCell colSpan={headers.length}>
             <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
               <span className="text-xs text-faded">
-                Showing {rowList.length === 0 ? 0 : startIndex + 1}–
-                {Math.min(startIndex + visibleRows.length, rowList.length)} of{" "}
-                {rowList.length}
+                Showing {totalItems === 0 ? 0 : startIndex + 1}–
+                {Math.min(startIndex + visibleRows.length, totalItems)} of{" "}
+                {totalItems}
               </span>
 
               <Pagination>

@@ -12,6 +12,7 @@ type TUserDetails = {
 
 type TUsersResponse = {
   data: TUserDetails[]
+  meta?: { total?: number }
 }
 
 type TCreateUserPayload = {

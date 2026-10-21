@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import CreateUserModal from "./components/create-user-modal";
 import { ArrowRightCircle } from "lucide-react";
+import { PER_PAGE } from "@/constants";
 import ViewUserModal from "./components/view-user-modal";
 
 const tableHeaders = [
@@ -21,20 +22,22 @@ export default function UsersPage() {
 
   const [selectedUID, setSelectedUID] = useState<string>("");
 
+  const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search);
+      setCurrentPage(1);
     }, 500);
 
     return () => clearTimeout(timer);
   }, [search]);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["users", debouncedSearch],
-    queryFn: () => GET_USERS({ search: debouncedSearch }),
+    queryKey: ["users", debouncedSearch, currentPage],
+    queryFn: () => GET_USERS({ search: debouncedSearch, page: currentPage, per_page: PER_PAGE }),
   });
 
   if (isPending) {
@@ -85,7 +88,14 @@ export default function UsersPage() {
         </Button>
       </div>
 
-      <SimpleTable headers={tableHeaders} rowList={rowList} pageSize={10} />
+      <SimpleTable
+        headers={tableHeaders}
+        rowList={rowList}
+        pageSize={PER_PAGE}
+        total={data?.meta?.total}
+        currentPage={currentPage}
+        onClick={setCurrentPage}
+      />
 
       <CreateUserModal isOpen={isOpen=='create'} onClose={() => setIsOpen(null)} />
         <ViewUserModal isOpen={isOpen=='view'} onClose={()=>setIsOpen(null)} uid={selectedUID} />
